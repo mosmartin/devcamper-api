@@ -1,11 +1,15 @@
 require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
+const dbConnect = require('./config/db');
 
 // require the route handlers
 const bootcamps = require("./src/routes/bootcamps");
 
 const app = express();
+
+// connect to the database
+dbConnect();
 
 // dev logging middleware
 if (process.env.NODE_ENV === "development") {
