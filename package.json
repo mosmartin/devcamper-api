@@ -1,0 +1,22 @@
+{
+  "name": "devcamper-api",
+  "version": "1.0.0",
+  "description": "DevCamper Backend API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mosmartin/devcamper-api.git"
+  },
+  "keywords": [
+    "DevCamper"
+  ],
+  "author": "Martin Macharia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mosmartin/devcamper-api/issues"
+  },
+  "homepage": "https://github.com/mosmartin/devcamper-api#readme"
+}
