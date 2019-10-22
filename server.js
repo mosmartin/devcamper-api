@@ -1,6 +1,9 @@
 require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
+const debug = require("debug")("worker:server");
+require("colors");
+require("supports-color");
 const dbConnect = require("./config/db");
 
 // require the route handlers
@@ -23,12 +26,15 @@ app.use("/api/v1/bootcamps", bootcamps);
 
 const server = app.listen(
   PORT,
-  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
+  debug(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
+  //   console.log(
+  //     `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
+  //   )
 );
 
 // handle unhandled promise rejections
 process.on("unhandledRejection", (err, promise) => {
-  console.log(`ERROR: ${err.message}`);
+  debug(`ERROR: ${err.message}`);
 
   // close server and exit the process
   server.close(() => process.exit(1));
