@@ -1,5 +1,6 @@
 const debug = require("debug")("worker:bootcamp-controller");
 require("supports-color");
+const ErrorResponse = require("../helpers/ErrorResponse");
 const Bootcamp = require("../models/Bootcamp");
 
 // @desc    Get all bootcamps
@@ -29,10 +30,9 @@ exports.getBootcamp = async (req, res, next) => {
 
     // check if bootcamp exists
     if (!bootcamp) {
-      return res.status(404).json({
-        success: false,
-        message: "Bootcamp not found."
-      });
+      return next(
+        new ErrorResponse(`Bootcamp with id: ${req.params.id} not found`, 404)
+      );
     }
 
     // successful response
@@ -75,10 +75,9 @@ exports.updateBootcamp = async (req, res, next) => {
 
     // check if bootcamp exists
     if (!bootcamp) {
-      return res.status(404).json({
-        success: false,
-        message: "Bootcamp not found."
-      });
+      return next(
+        new ErrorResponse(`Bootcamp with id: ${req.params.id} not found`, 404)
+      );
     }
     // successful response
     res.status(200).json({
@@ -99,10 +98,9 @@ exports.deleteBootcamp = async (req, res, next) => {
 
     // check if bootcamp exists
     if (!bootcamp) {
-      return res.status(404).json({
-        success: false,
-        message: "Bootcamp not found."
-      });
+      return next(
+        new ErrorResponse(`Bootcamp with id: ${req.params.id} not found`, 404)
+      );
     }
     // successful response
     res.status(200).json({
