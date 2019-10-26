@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+const slugify = require("slugify");
+const debug = require("debug")("worker:bootcamp-model");
+require("supports-color");
 
 const Schema = mongoose.Schema;
 
@@ -45,12 +48,10 @@ const bootcampSchema = new Schema({
     // GeoJSON
     type: {
       type: String,
-      enum: ["Point"], // 'location.type' must be 'Point'
-      required: true
+      enum: ["Point"] // 'location.type' must be 'Point'
     },
     coordinates: {
       type: [Number],
-      required: true,
       index: "2dsphere"
     },
     formattedAddress: String,
@@ -103,6 +104,12 @@ const bootcampSchema = new Schema({
     type: Date,
     default: Date.now
   }
+});
+
+// create the bootcamp's slug from the name
+bootcampSchema.pre("save", function(next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
 });
 
 // create the model
