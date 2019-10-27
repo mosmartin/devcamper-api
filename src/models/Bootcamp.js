@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const slugify = require("slugify");
 const debug = require("debug")("worker:bootcamp-model");
 require("supports-color");
+const geocoder = require("../utils/geocoder");
 
 const Schema = mongoose.Schema;
 
@@ -109,6 +110,27 @@ const bootcampSchema = new Schema({
 // create the bootcamp's slug from the name
 bootcampSchema.pre("save", function(next) {
   this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+// geocode & location deta
+bootcampSchema.pre("save", async function(next) {
+  const locationData = await geocoder.geocode(this.address);
+
+  this.location = {
+    type: "Point",
+    coordinates: [locationData[0].longitude, locationData[0].latitude],
+    formattedAddress: locationData[0].formattedAddress,
+    street: locationData[0].streetName,
+    city: locationData[0].city,
+    state: locationData[0].stateCode,
+    zipCode: locationData[0].zipCode,
+    country: locationData[0].countryCode
+  };
+
+  // do not save the address in the database
+  this.address = undefined;
+
   next();
 });
 
