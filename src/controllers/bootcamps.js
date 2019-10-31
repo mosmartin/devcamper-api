@@ -3,6 +3,7 @@ require("supports-color");
 const ErrorResponse = require("../helpers/ErrorResponse");
 const asyncHandler = require("../middleware/async");
 const Bootcamp = require("../models/Bootcamp");
+const geocoder = require("../utils/geocoder");
 
 // @desc    Get all bootcamps
 // @route   GET /api/v1/bootcamps
@@ -89,5 +90,36 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
   // successful response
   res.status(200).json({
     success: true
+  });
+});
+
+// @desc    Get bootcamps within a sprecified radius
+// @route   GET /api/v1/bootcamps/radius/:zipcode/:distance
+// @access  Private
+exports.getBootcampsInRadius = asyncHandler(async (req, res, next) => {
+  // get the params from the request
+  const { zipcode, distance } = req.params;
+
+  // get the lat & lng from the geocoder
+  const loc = await geocoder.geocode(zipcode);
+  const lat = loc[0].latitude;
+  const lng = loc[0].longitude;
+
+  // calculate the radius using radians
+  // get the radius of the earth
+  // divide distance by radius of the earth
+  // The radius of Earth at the equator is 3,963 miles (6,378 kilometers)
+  const radius = distance / 3963;
+
+  const bootcamps = await Bootcamp.find({
+    location: {
+      $geoWithin: { $centerSphere: [[lng, lat], radius] }
+    }
+  });
+
+  res.status(200).json({
+    success: true,
+    count: bootcamps.length,
+    data: bootcamps
   });
 });
