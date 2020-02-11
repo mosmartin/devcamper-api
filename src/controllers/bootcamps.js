@@ -1,9 +1,9 @@
-const debug = require("debug")("worker:bootcamp-controller");
-require("supports-color");
-const ErrorResponse = require("../helpers/ErrorResponse");
-const asyncHandler = require("../middleware/async");
-const Bootcamp = require("../models/Bootcamp");
-const geocoder = require("../utils/geocoder");
+const debug = require('debug')('worker:bootcamp-controller');
+require('supports-color');
+const ErrorResponse = require('../helpers/ErrorResponse');
+const asyncHandler = require('../middleware/async');
+const Bootcamp = require('../models/Bootcamp');
+const geocoder = require('../utils/geocoder');
 
 // @desc    Get all bootcamps
 // @route   GET /api/v1/bootcamps
@@ -15,7 +15,7 @@ exports.getBootcamps = asyncHandler(async (req, res, next) => {
   const reqQuery = { ...req.query };
 
   // fields to exclude during filtering
-  const removeFields = ["select"];
+  const removeFields = ['select'];
 
   // loop over removeFields and delete from the request query
   removeFields.forEach(param => delete reqQuery[param]);
@@ -31,7 +31,7 @@ exports.getBootcamps = asyncHandler(async (req, res, next) => {
 
   // select fields to return
   if (req.query.select) {
-    const fields = req.query.select.split(",").join(" ");
+    const fields = req.query.select.split(',').join(' ');
     query = query.select(fields);
   }
 

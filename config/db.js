@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const debug = require("debug")("worker:database");
+const mongoose = require('mongoose');
+const debug = require('debug')('worker:database');
 
 const dbConnect = async () => {
   const conn = await mongoose.connect(process.env.MONGO_URI, {

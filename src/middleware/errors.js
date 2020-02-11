@@ -1,6 +1,6 @@
-const debug = require("debug")("worker:errors-middleware");
-require("supports-color");
-const ErrorResponse = require("../helpers/ErrorResponse");
+const debug = require('debug')('worker:errors-middleware');
+require('supports-color');
+const ErrorResponse = require('../helpers/ErrorResponse');
 
 const errorHandler = (err, req, res, next) => {
   let error = { ...err };
@@ -11,7 +11,7 @@ const errorHandler = (err, req, res, next) => {
   debug(err);
 
   // mongoose bad object id
-  if (err.name === "CastError") {
+  if (err.name === 'CastError') {
     const message = `Resource with id: ${err.value} not found.`;
     error = new ErrorResponse(message, 404);
   }
@@ -23,14 +23,14 @@ const errorHandler = (err, req, res, next) => {
   }
 
   // mongoose validation errors
-  if (err.name === "ValidationError") {
+  if (err.name === 'ValidationError') {
     const message = Object.values(err.errors).map(val => val.message);
     error = new ErrorResponse(message, 400);
   }
 
   res.status(error.statusCode || 500).json({
     success: false,
-    error: error.message || "Internal Server Error"
+    error: error.message || 'Internal Server Error'
   });
 };
 

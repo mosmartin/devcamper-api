@@ -1,11 +1,11 @@
-require("dotenv").config();
-const fs = require("fs");
-const mongoose = require("mongoose");
-const debug = require("debug")("worker:db-seeder-util");
-require("supports-color");
+require('dotenv').config();
+const fs = require('fs');
+const mongoose = require('mongoose');
+const debug = require('debug')('worker:db-seeder-util');
+require('supports-color');
 
 // load models
-const Bootcamp = require("./src/models/Bootcamp");
+const Bootcamp = require('./src/models/Bootcamp');
 
 // connect to database
 mongoose.connect(process.env.MONGO_URI, {
@@ -17,14 +17,14 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // read the JSON files
 const bootcamps = JSON.parse(
-  fs.readFileSync(`${__dirname}/_data/bootcamps.json`, "utf-8")
+  fs.readFileSync(`${__dirname}/_data/bootcamps.json`, 'utf-8')
 );
 
 // import into db
 const importData = async () => {
   try {
     await Bootcamp.create(bootcamps);
-    debug("Data successfully imported...");
+    debug('Data successfully imported...');
     process.exit();
   } catch (err) {
     debug(err);
@@ -35,15 +35,15 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await Bootcamp.deleteMany();
-    debug("Data successfully deleted...");
+    debug('Data successfully deleted...');
     process.exit();
   } catch (err) {
     debug(err);
   }
 };
 
-if (process.argv[2] === "-i") {
+if (process.argv[2] === '-i') {
   importData();
-} else if (process.argv[2] === "-d") {
+} else if (process.argv[2] === '-d') {
   deleteData();
 }
