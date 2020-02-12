@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const debug = require('debug')('worker:database');
+const debug = require('debug')('app:database');
 
 const dbConnect = async () => {
   const conn = await mongoose.connect(process.env.MONGO_URI, {
@@ -9,7 +9,7 @@ const dbConnect = async () => {
     useUnifiedTopology: true
   });
 
-  debug(`Connected to DB on ${conn.connection.host} host`);
+  debug(`👍 Connected to DB on ${conn.connection.host} host`);
 };
 
 module.exports = dbConnect;

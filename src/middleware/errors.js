@@ -1,4 +1,4 @@
-const debug = require('debug')('worker:errors-middleware');
+const debug = require('debug')('app:errors-middleware');
 require('supports-color');
 const ErrorResponse = require('../helpers/ErrorResponse');
 
