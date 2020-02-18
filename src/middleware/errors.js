@@ -9,6 +9,7 @@ const errorHandler = (err, req, res, next) => {
 
   // log to console
   debug(err);
+  console.log(err);
 
   // mongoose bad object id
   if (err.name === 'CastError') {
