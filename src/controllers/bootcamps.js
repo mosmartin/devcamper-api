@@ -1,6 +1,6 @@
 const debug = require('debug')('app:bootcamp-controller');
 require('supports-color');
-const ErrorResponse = require('../helpers/ErrorResponse');
+const ErrorResponse = require('../utils/ErrorResponse');
 const asyncHandler = require('../middleware/async');
 const Bootcamp = require('../models/Bootcamp');
 const geocoder = require('../utils/geocoder');

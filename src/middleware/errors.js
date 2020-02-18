@@ -1,6 +1,6 @@
 const debug = require('debug')('app:errors-middleware');
 require('supports-color');
-const ErrorResponse = require('../helpers/ErrorResponse');
+const ErrorResponse = require('../utils/ErrorResponse');
 
 const errorHandler = (err, req, res, next) => {
   let error = { ...err };
