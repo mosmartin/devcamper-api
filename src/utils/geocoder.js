@@ -1,5 +1,4 @@
 const NodeGeocoder = require('node-geocoder');
-const debug = require('debug')('worker:node-geocoder');
 require('supports-color');
 
 const options = {

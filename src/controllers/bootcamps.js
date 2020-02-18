@@ -60,7 +60,7 @@ exports.getBootcamp = asyncHandler(async (req, res, next) => {
   }
 
   // successful response
-  res.status(200).json({
+  res.status(200).json({ 
     success: true,
     data: bootcamp
   });

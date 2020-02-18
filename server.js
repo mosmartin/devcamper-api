@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
+const helmet = require('helmet');
 const debug = require('debug')('app:server');
 require('colors');
 require('supports-color');
@@ -15,6 +16,9 @@ const PORT = process.env.PORT;
 
 // connect to the database
 dbConnect();
+
+// secure app
+app.use(helmet());
 
 // use the body parser middleware
 app.use(express.json());
@@ -33,7 +37,4 @@ app.use(errorHandler);
 const server = app.listen(
   PORT,
   debug(`🚀 Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
-  //   console.log(
-  //     `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
-  //   )
 );
