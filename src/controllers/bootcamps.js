@@ -60,7 +60,7 @@ exports.getBootcamp = asyncHandler(async (req, res, next) => {
   }
 
   // successful response
-  res.status(200).json({ 
+  res.status(200).json({
     success: true,
     data: bootcamp
   });
@@ -135,8 +135,11 @@ exports.getBootcampsInRadius = asyncHandler(async (req, res, next) => {
   // calculate the radius using radians
   // get the radius of the earth
   // divide distance by radius of the earth
-  // The radius of Earth at the equator is 3,963 miles (6,378 kilometers)
-  const radius = distance / 3963;
+  // The radius of Earth at the equator is 3,963 miles | 6,378 kilometers
+  const miles = 3963;
+  const kilometers = 6378;
+
+  const radius = distance / miles;
 
   const bootcamps = await Bootcamp.find({
     location: {
