@@ -1,2 +1,2 @@
 # devcamper-api
-Bootcamp Directory API
+Bootcamp Directory REST API
