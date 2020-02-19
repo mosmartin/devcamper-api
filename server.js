@@ -10,6 +10,7 @@ const dbConnect = require('./config/db');
 
 // require the route handlers
 const bootcamps = require('./src/routes/bootcamps');
+const courses = require('./src/routes/courses');
 
 const app = express();
 const PORT = process.env.PORT;
@@ -30,6 +31,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // mount routers
 app.use('/api/v1/bootcamps', bootcamps);
+app.use('/api/v1/courses', courses);
 
 // error handling middleware
 app.use(errorHandler);
