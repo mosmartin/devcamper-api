@@ -7,6 +7,7 @@ require('supports-color');
 
 // load models
 const Bootcamp = require('./src/models/Bootcamp');
+const Course = require('./src/models/Course');
 
 // connect to database
 mongoose.connect(process.env.MONGO_URI, {
@@ -21,10 +22,15 @@ const bootcamps = JSON.parse(
   fs.readFileSync(`${__dirname}/data/bootcamps.json`, 'utf-8')
 );
 
+const courses = JSON.parse(
+  fs.readFileSync(`${__dirname}/data/courses.json`, 'utf-8')
+);
+
 // import into db
 const importData = async () => {
   try {
     await Bootcamp.create(bootcamps);
+    await Course.create(courses);
     debug('👍 Data Successfully Imported...');
     // console.log('👍 Data Successfully Imported...'.green.inverse);
     process.exit();
@@ -37,6 +43,7 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await Bootcamp.deleteMany(); // no params passed so will delete all
+    await Course.deleteMany();
     debug('👍 Data successfully deleted...');
     // console.log('👍 Data Successfully Deleted...'.red.inverse);
     process.exit();
