@@ -3,6 +3,7 @@ require('supports-color');
 const ErrorResponse = require('../utils/ErrorResponse');
 const asyncHandler = require('../middleware/async');
 const Course = require('../models/Course');
+const Bootcamp = require('../models/Bootcamp');
 
 // @desc    Get all courses
 // @route   GET /api/v1/courses
@@ -52,6 +53,35 @@ exports.getCourse = asyncHandler(async (req, res, next) => {
 
   // successful response
   res.status(200).json({
+    success: true,
+    data: course
+  });
+});
+
+// @desc    Create a course
+// @route   POST /api/v1/bootcamps/:bootcampId/courses
+// @access  Private
+exports.createCourse = asyncHandler(async (req, res, next) => {
+  // get bootcamp id
+  req.body.bootcamp = req.params.bootcampId;
+
+  // get bootcamp
+  const bootcamp = await Bootcamp.findById(req.params.bootcampId);
+
+  // check if bootcamp exists
+  if (!bootcamp) {
+    return next(
+      new ErrorResponse(
+        `Bootcamp with id: ${req.params.bootcampId} not found`,
+        404
+      )
+    );
+  }
+
+  const course = await Course.create(req.body);
+
+  // successful response
+  res.status(201).json({
     success: true,
     data: course
   });
