@@ -93,7 +93,8 @@ exports.getBootcamp = asyncHandler(async (req, res, next) => {
   // check if bootcamp exists
   if (!bootcamp) {
     return next(
-      new ErrorResponse(`Bootcamp with id: ${req.params.id} not found`, 404)
+      new ErrorResponse(`Bootcamp with id: ${req.params.id} not found`),
+      404
     );
   }
 
@@ -130,7 +131,8 @@ exports.updateBootcamp = asyncHandler(async (req, res, next) => {
   // check if bootcamp exists
   if (!bootcamp) {
     return next(
-      new ErrorResponse(`Bootcamp with id: ${req.params.id} not found`, 404)
+      new ErrorResponse(`Bootcamp with id: ${req.params.id} not found`),
+      404
     );
   }
   // successful response
@@ -152,12 +154,13 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
   // check if bootcamp exists
   if (!bootcamp) {
     return next(
-      new ErrorResponse(`Bootcamp with id: ${req.params.id} not found`, 404)
+      new ErrorResponse(`Bootcamp with id: ${req.params.id} not found`),
+      404
     );
   }
 
   // this will trigger the cascade effect
-  bootcamp.remove();
+  await bootcamp.remove();
 
   // successful response
   res.status(200).json({

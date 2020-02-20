@@ -47,7 +47,8 @@ exports.getCourse = asyncHandler(async (req, res, next) => {
   // check if course exists
   if (!course) {
     return next(
-      new ErrorResponse(`Course with id: ${req.params.id} not found`, 404)
+      new ErrorResponse(`Course with id: ${req.params.id} not found`),
+      404
     );
   }
 
@@ -99,12 +100,35 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
   // check if bootcamp exists
   if (!course) {
     return next(
-      new ErrorResponse(`Course with id: ${req.params.id} not found`, 404)
+      new ErrorResponse(`Course with id: ${req.params.id} not found`),
+      404
     );
   }
   // successful response
   res.status(200).json({
     success: true,
     data: course
+  });
+});
+
+// @desc    Delete a course
+// @route   DELETE /api/v1/courses/:id
+// @access  Private
+exports.deleteCourse = asyncHandler(async (req, res, next) => {
+  const course = await Course.findById(req.params.id);
+
+  // check if bootcamp exists
+  if (!course) {
+    return next(
+      new ErrorResponse(`Course with id: ${req.params.id} not found`),
+      404
+    );
+  }
+
+  await course.remove();
+
+  // successful response
+  res.status(200).json({
+    success: true
   });
 });
