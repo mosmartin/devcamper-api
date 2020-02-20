@@ -144,7 +144,10 @@ exports.updateBootcamp = asyncHandler(async (req, res, next) => {
 // @route   DELETE /api/v1/bootcamps/:id
 // @access  Private
 exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
-  const bootcamp = await Bootcamp.findByIdAndDelete(req.params.id);
+  // const bootcamp = await Bootcamp.findByIdAndDelete(req.params.id);
+
+  // to effect the cascade deletion of courses in the deleted bootcamp
+  const bootcamp = await Bootcamp.findById(req.params.id);
 
   // check if bootcamp exists
   if (!bootcamp) {
@@ -152,6 +155,10 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
       new ErrorResponse(`Bootcamp with id: ${req.params.id} not found`, 404)
     );
   }
+
+  // this will trigger the cascade effect
+  bootcamp.remove();
+
   // successful response
   res.status(200).json({
     success: true
