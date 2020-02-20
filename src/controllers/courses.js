@@ -47,8 +47,7 @@ exports.getCourse = asyncHandler(async (req, res, next) => {
   // check if course exists
   if (!course) {
     return next(
-      new ErrorResponse(`Course with id: ${req.params.id} not found`),
-      404
+      new ErrorResponse(`Course with id: ${req.params.id} not found`, 404)
     );
   }
 
@@ -72,10 +71,7 @@ exports.createCourse = asyncHandler(async (req, res, next) => {
   // check if bootcamp exists
   if (!bootcamp) {
     return next(
-      new ErrorResponse(
-        `Bootcamp with id: ${req.params.bootcampId} not found`,
-        404
-      )
+      new ErrorResponse(`Bootcamp with id: ${req.params.id} not found`, 404)
     );
   }
 
@@ -100,8 +96,7 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
   // check if bootcamp exists
   if (!course) {
     return next(
-      new ErrorResponse(`Course with id: ${req.params.id} not found`),
-      404
+      new ErrorResponse(`Course with id: ${req.params.id} not found`, 404)
     );
   }
   // successful response
@@ -120,8 +115,7 @@ exports.deleteCourse = asyncHandler(async (req, res, next) => {
   // check if bootcamp exists
   if (!course) {
     return next(
-      new ErrorResponse(`Course with id: ${req.params.id} not found`),
-      404
+      new ErrorResponse(`Course with id: ${req.params.id} not found`, 404)
     );
   }
 
