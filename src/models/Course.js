@@ -36,9 +36,7 @@ const courseSchema = new Schema(
       required: true
     }
   },
-  {
-    timestamps: true
-  }
+  { timestamps: true }
 );
 
 // create the model
