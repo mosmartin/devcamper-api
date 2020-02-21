@@ -1,10 +1,12 @@
 require('dotenv').config();
+const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const debug = require('debug')('worker:server');
 require('colors');
 require('supports-color');
+const fileUpload = require('express-fileupload');
 const errorHandler = require('./src/middleware/errors');
 const dbConnect = require('./config/db');
 
@@ -29,6 +31,12 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+// file upload
+app.use(fileUpload());
+
+// set static folder
+app.use(express.static(path.join(__dirname, 'public')));
+
 // mount routers
 app.use('/api/v1/bootcamps', bootcamps);
 app.use('/api/v1/courses', courses);
@@ -38,5 +46,6 @@ app.use(errorHandler);
 
 const server = app.listen(
   PORT,
-  debug(`🚀 Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
+  debug(`\t🚀 Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
+  // console.log(`🚀 Server running in ${process.env.NODE_ENV} mode on port ${PORT}...`.green.inverse)
 );

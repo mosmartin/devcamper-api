@@ -9,7 +9,7 @@ const dbConnect = async () => {
     useUnifiedTopology: true
   });
 
-  debug(`👍 Connected to DB on ${conn.connection.host} host`);
+  debug(`\t👍 Connected to DB on ${conn.connection.host} host`);
 };
 
 module.exports = dbConnect;

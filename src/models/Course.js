@@ -42,8 +42,6 @@ const courseSchema = new Schema(
 
 // static method to get the average of the course tuitions
 courseSchema.statics.getAverageCost = async function(bootcampId) {
-  debug('Inside the getAverageCost() function');
-
   const obj = await this.aggregate([
     {
       $match: { bootcamp: bootcampId }
@@ -55,8 +53,6 @@ courseSchema.statics.getAverageCost = async function(bootcampId) {
       }
     }
   ]);
-
-  debug(obj);
 
   try {
     await this.model('Bootcamp').findByIdAndUpdate(bootcampId, {
