@@ -1,4 +1,4 @@
-const debug = require('debug')('app:bootcamp-controller');
+const debug = require('debug')('worker:course-controller');
 require('supports-color');
 const ErrorResponse = require('../utils/ErrorResponse');
 const asyncHandler = require('../middleware/async');

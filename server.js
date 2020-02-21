@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
-const debug = require('debug')('app:server');
+const debug = require('debug')('worker:server');
 require('colors');
 require('supports-color');
 const errorHandler = require('./src/middleware/errors');

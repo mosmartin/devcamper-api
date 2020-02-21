@@ -1,7 +1,7 @@
 require('dotenv').config();
 const fs = require('fs');
 const mongoose = require('mongoose');
-const debug = require('debug')('app:db-seeder-util');
+const debug = require('debug')('worker:db-seeder-util');
 require('supports-color');
 // const color = require('colors');
 
@@ -30,8 +30,8 @@ const courses = JSON.parse(
 const importData = async () => {
   try {
     await Bootcamp.create(bootcamps);
-    await Course.create(courses);
-    debug('👍 Data Successfully Imported...');
+    // await Course.create(courses);
+    debug('👍 Data Successfully Imported...'.toUpperCase());
     // console.log('👍 Data Successfully Imported...'.green.inverse);
     process.exit();
   } catch (err) {
@@ -44,7 +44,7 @@ const deleteData = async () => {
   try {
     await Bootcamp.deleteMany(); // no params passed so will delete all
     await Course.deleteMany();
-    debug('👍 Data successfully deleted...');
+    debug('👍 Data successfully deleted...'.toUpperCase());
     // console.log('👍 Data Successfully Deleted...'.red.inverse);
     process.exit();
   } catch (err) {
