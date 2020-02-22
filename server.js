@@ -7,6 +7,7 @@ const debug = require('debug')('worker:server');
 require('colors');
 require('supports-color');
 const fileUpload = require('express-fileupload');
+const cookieParser = require('cookie-parser');
 const errorHandler = require('./src/middleware/errors');
 const dbConnect = require('./config/db');
 
@@ -26,6 +27,9 @@ app.use(helmet());
 
 // use the body parser middleware
 app.use(express.json());
+
+// use the cookie parser middleware
+app.use(cookieParser());
 
 // dev logging middleware
 if (process.env.NODE_ENV === 'development') {
