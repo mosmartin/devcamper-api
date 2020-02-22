@@ -19,9 +19,11 @@ exports.register = asyncHandler(async (req, res, next) => {
   });
 
   // create token
-  const token = user.getSignedJwtToken();
+  // const token = user.getSignedJwtToken();
 
-  res.status(200).json({ success: true, token });
+  // res.status(200).json({ success: true, token });
+
+  getToken(user, 200, res);
 });
 
 // @desc    Login a User
@@ -52,7 +54,36 @@ exports.login = asyncHandler(async (req, res, next) => {
   }
 
   // create token
+  // const token = user.getSignedJwtToken();
+
+  // res.status(200).json({ success: true, token });
+
+  getToken(user, 200, res);
+});
+
+// get token from the model, create a cookie and generate response
+const getToken = (user, statusCode, res) => {
+  // create token
   const token = user.getSignedJwtToken();
 
-  res.status(200).json({ success: true, token });
-});
+  // create cookie
+  const options = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000 // 30 days
+    ),
+    httpOnly: true
+  };
+
+  // secure cookie if https - production env
+  if (process.env.NODE_ENV === 'production') {
+    options.secure = true;
+  }
+
+  res
+    .status(statusCode)
+    .cookie('token', token, options)
+    .json({
+      success: true,
+      token
+    });
+};
