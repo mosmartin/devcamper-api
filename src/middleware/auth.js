@@ -34,3 +34,17 @@ exports.protect = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`Unauthorized!`, 401));
   }
 });
+
+// role based auth
+exports.authorize = (...roles) => {
+  return (req, res, next) => {
+    // check if logged in user has an assgined role
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new ErrorResponse(`User role ${req.user.role} is unauthorized !`, 403)
+      );
+    }
+
+    next();
+  };
+};
