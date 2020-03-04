@@ -116,7 +116,7 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
     );
   }
 
-  // ensure logged in user can update to bootcamp
+  // ensure logged in user can delete to bootcamp
   if (bootcamp.user.toString() !== req.user.id && req.user.role !== 'admin') {
     return next(
       new ErrorResponse(
@@ -183,6 +183,16 @@ exports.bootcampPhotoUpload = asyncHandler(async (req, res, next) => {
     );
   }
 
+  // ensure logged in user can delete to bootcamp
+  if (bootcamp.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(
+        `You (id: ${req.params.id}) are not authorized to upload a photo/pic to this bootcamp`,
+        401
+      )
+    );
+  }
+
   // check if a file was uploaded
   if (!req.files) {
     return next(new ErrorResponse(`Please upload a bootcamp photo.`, 400));
@@ -217,7 +227,9 @@ exports.bootcampPhotoUpload = asyncHandler(async (req, res, next) => {
     }
 
     // pass filename to database
-    await Bootcamp.findByIdAndUpdate(req.params.id, { photo: file.name });
+    await Bootcamp.findByIdAndUpdate(req.params.id, {
+      photo: file.name
+    });
 
     res.status(200).json({
       success: true,
