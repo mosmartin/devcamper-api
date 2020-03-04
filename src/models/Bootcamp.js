@@ -101,11 +101,16 @@ const bootcampSchema = new Schema(
       type: Boolean,
       default: false
     },
-    averageCost: Number
+    averageCost: Number,
     // createdAt: {
     //   type: Date,
     //   default: Date.now
     // }
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User', // model
+      required: true
+    }
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } },
   { timestamps: true }

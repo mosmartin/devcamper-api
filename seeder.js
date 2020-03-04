@@ -6,6 +6,7 @@ const color = require('colors');
 // load models
 const Bootcamp = require('./src/models/Bootcamp');
 const Course = require('./src/models/Course');
+const User = require('./src/models/User');
 
 // connect to database
 mongoose.connect(process.env.MONGO_URI, {
@@ -24,11 +25,16 @@ const courses = JSON.parse(
   fs.readFileSync(`${__dirname}/data/courses.json`, 'utf-8')
 );
 
+const users = JSON.parse(
+  fs.readFileSync(`${__dirname}/data/users.json`, 'utf-8')
+);
+
 // import into db
 const importData = async () => {
   try {
     await Bootcamp.create(bootcamps);
     await Course.create(courses);
+    await User.create(users);
     console.log('👍 Data Successfully Imported...'.green.inverse);
     process.exit();
   } catch (err) {
@@ -41,6 +47,7 @@ const deleteData = async () => {
   try {
     await Bootcamp.deleteMany(); // no params passed so will delete all
     await Course.deleteMany();
+    await User.deleteMany();
     console.log('👍 Data Successfully Deleted...'.red.inverse);
     process.exit();
   } catch (err) {
