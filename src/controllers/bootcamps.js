@@ -183,7 +183,7 @@ exports.bootcampPhotoUpload = asyncHandler(async (req, res, next) => {
     );
   }
 
-  // ensure logged in user can delete to bootcamp
+  // ensure logged in user can upload an image to the bootcamp
   if (bootcamp.user.toString() !== req.user.id && req.user.role !== 'admin') {
     return next(
       new ErrorResponse(
